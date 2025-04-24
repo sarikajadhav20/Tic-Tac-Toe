@@ -87,20 +87,23 @@
                 const cellPlayerImage=playerImage[cellValue];
                 const cellImage=cellPlayerImage?`<img src="${cellClass[cellValue]}"/>`:'';
 
-                boardElement.innerHTML+=`<div class="cell ${cellClass[cellValue]}" onclick="handleTurn(${index})">${cellImage}</div>`;
+                boardElement.innerHTML+=`<div class="cell ${cellClass[cellValue]}" onclick="handleTurn(${index})"><img src="${playerImage[cellValue]}"/></div>`;
             });
             checkWinner();
         }
         renderBoard();
 
-        function handleTurn(cellIndex){
-            if(board[cellIndex]!=-1){
-              board[cellIndex]=turn;
-              turn=turn==1?2:1;
-              renderBoard();
-            }else{
+        function handleTurn(cellIndex) {
+            if (board[cellIndex] === -1) {
+                board[cellIndex] = turn;
+                if (checkWinner()) {
+                    alert(`Player ${turn} wins!`);
+                    return; 
+                }
+                turn = turn === 1 ? 2 : 1; 
+                renderBoard();
+            } else {
                 alert("Invalid move");
-                return;
             }
         }
         function checkWinner(){
